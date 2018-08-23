@@ -19,7 +19,7 @@ Cenario: Cadastrar um novo bug
     	E submeto o formulario
     Então consigo visualizar o formulario no painel de bugs
 
-Cenario: Editar um novo bug
+Cenario: Editar um bug
 
     Dado que seleciono o projeto
     	E acesso o menu de View Issues

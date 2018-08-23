@@ -102,21 +102,39 @@ public class Steps {
 	
 	@Dado("^acesso o menu de View Issues$")
 	public void acessoOMenuDeViewIssues() throws Throwable {
+		driver.findElement(By.xpath("//a[@href='/view_all_bug_page.php']")).click();
 
 	}
 
 	@Quando("^seleciono um bug da lista$")
 	public void selecionoUmBugDaLista() throws Throwable {
+		driver.findElement(By.xpath("//input[@name='search']")).sendKeys("teste automatico");
+		driver.findElement(By.xpath("//input[@class='button-small']")).click();
+		String texto = driver.findElement(By.xpath("//td[@class='left']")).getText();
+		Assert.assertEquals("teste automatico", texto);
 
 	}
 
 	@Quando("^edito este bug$")
 	public void editoEsteBug() throws Throwable {
-
+		driver.findElement(By.xpath("//a[starts-with(@href, 'bug_update_page.php?')]")).click();		
+		WebDriverWait wait = new WebDriverWait(driver, 25);
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//form[@action='bug_update.php']")));
+		driver.findElement(By.xpath("//option[@value='33']")).click();
+		driver.findElement(By.xpath("//option[@value='78']")).click();
+		driver.findElement(By.xpath("//input[@name='summary']")).sendKeys(" editado");
+		driver.findElement(By.xpath("//textarea[@name='description']")).sendKeys(" editado");
+		driver.findElement(By.xpath("//textarea[@name='steps_to_reproduce']")).sendKeys(" editado");
+		driver.findElement(By.xpath("//input[@class='button']")).click();
 	}
 
 	@Então("^consigo visualizar o bug alterado no formulario$")
 	public void consigoVisualizarOBugAlteradoNoFormulario() throws Throwable {
+		driver.findElement(By.xpath("//a[@href='/view_all_bug_page.php']")).click();
+		driver.findElement(By.xpath("//input[@name='search']")).sendKeys("teste automatico editado");
+		driver.findElement(By.xpath("//input[@class='button-small']")).click();
+		String texto = driver.findElement(By.xpath("//td[@class='left']")).getText();
+		Assert.assertEquals("teste automatico editado", texto);
 
 	}
 
