@@ -114,6 +114,14 @@ public class Steps {
 		Assert.assertEquals("teste automatico", texto);
 
 	}
+	
+	@Quando("^seleciono um bug da lista para excluir$")
+	public void selecionoUmBugDaListaParaExcluir() throws Throwable {
+		driver.findElement(By.xpath("//input[@name='search']")).sendKeys("teste automatico editado");
+		driver.findElement(By.xpath("//input[@class='button-small']")).click();
+		String texto = driver.findElement(By.xpath("//td[@class='left']")).getText();
+		Assert.assertEquals("teste automatico editado", texto);
+	}
 
 	@Quando("^edito este bug$")
 	public void editoEsteBug() throws Throwable {
@@ -136,6 +144,25 @@ public class Steps {
 		String texto = driver.findElement(By.xpath("//td[@class='left']")).getText();
 		Assert.assertEquals("teste automatico editado", texto);
 
+	}
+	
+	@Quando("^excluo o bug$")
+	public void excluo() throws Throwable {
+		driver.findElement(By.xpath("//a[starts-with(@href, '/view.php?')]")).click();
+		WebDriverWait wait = new WebDriverWait(driver, 25);
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@value='Delete']")));
+		driver.findElement(By.xpath("//input[@value='Delete']")).click();
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@value='Delete Issues']")));
+		driver.findElement(By.xpath("//input[@value='Delete Issues']")).click();
+
+	}
+
+	@Então("^não consigo visualizar o bug na lista de bugs$")
+	public void nãoConsigoVisualizarOBugNaListaDeBugs() throws Throwable {
+		driver.findElement(By.xpath("//input[@name='search']")).sendKeys("teste automatico");
+		driver.findElement(By.xpath("//input[@class='button-small']")).click();
+		String texto = driver.findElement(By.xpath("//td[@class='left']")).getText();
+		Assert.assertEquals(" ", texto);
 	}
 
 	@After

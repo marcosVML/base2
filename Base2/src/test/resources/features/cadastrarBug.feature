@@ -26,3 +26,11 @@ Cenario: Editar um bug
     Quando seleciono um bug da lista
     	E edito este bug 
     Então consigo visualizar o bug alterado no formulario
+
+Cenario: Excluir um bug
+
+    Dado que seleciono o projeto
+    	E acesso o menu de View Issues
+    Quando seleciono um bug da lista para excluir
+    	E excluo o bug
+    Então não consigo visualizar o bug na lista de bugs
