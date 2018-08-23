@@ -87,15 +87,12 @@ public class Steps {
 	@Quando("^submeto o formulario$")
 	public void submetoOFormulario() throws Throwable {
 		driver.findElement(By.xpath("//input[@class='button']")).click();
-		WebDriverWait wait = new WebDriverWait(driver, 25);
-		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//td[@class='left']")));
-		
-
-
 	}
 
 	@Então("^consigo visualizar o formulario no painel de bugs$")
 	public void consigoVisualizarOFormularioNoPainelDeBugs() throws Throwable {
+		WebDriverWait wait = new WebDriverWait(driver, 25);
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//td[@class='left']")));
 		String texto = driver.findElement(By.xpath("//td[@class='left']")).getText();
 		Assert.assertEquals("teste automatico", texto);
 	}
@@ -163,6 +160,38 @@ public class Steps {
 		driver.findElement(By.xpath("//input[@class='button-small']")).click();
 		String texto = driver.findElement(By.xpath("//td[@class='left']")).getText();
 		Assert.assertEquals(" ", texto);
+	}
+	
+	@Quando("^realizo o preenchimento do formulario deixando os campos de Summary e Description vazios$")
+	public void realizoOPreenchimentoDoFormularioDeixandoOsCamposDeSummaryEDescriptionVazios() throws Throwable {
+		WebDriverWait wait = new WebDriverWait(driver, 25);
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//form[@action='bug_report.php']")));
+		driver.findElement(By.xpath("//option[@value='33']")).click();
+		driver.findElement(By.xpath("//option[@value='78']")).click();
+		driver.findElement(By.xpath("//input[@name='summary']")).sendKeys("");
+		driver.findElement(By.xpath("//textarea[@name='description']")).sendKeys("");
+		driver.findElement(By.xpath("//textarea[@name='steps_to_reproduce']")).sendKeys("teste automatico passos");
+	}
+
+	@Então("^vejo a mensagem$")
+	public void vejoAMensagem() throws Throwable {
+		WebDriverWait wait = new WebDriverWait(driver, 25);
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//p[@class='center']")));
+		String texto = driver.findElement(By.xpath("//p[@class='center']")).getText();
+		Assert.assertEquals("A necessary field \"Summary\" was empty. Please recheck your inputs.", texto);
+	}
+	
+	@Quando("^edito este bug apagando campos obrigatorios e submeto$")
+	public void editoEsteBugApagandoCamposObrigatoriosESubmeto() throws Throwable {
+		driver.findElement(By.xpath("//a[starts-with(@href, 'bug_update_page.php?')]")).click();		
+		WebDriverWait wait = new WebDriverWait(driver, 25);
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//form[@action='bug_update.php']")));
+		driver.findElement(By.xpath("//option[@value='33']")).click();
+		driver.findElement(By.xpath("//option[@value='78']")).click();
+		driver.findElement(By.xpath("//input[@name='summary']")).clear();
+		driver.findElement(By.xpath("//textarea[@name='description']")).clear();
+		driver.findElement(By.xpath("//textarea[@name='steps_to_reproduce']")).sendKeys(" editado");
+		driver.findElement(By.xpath("//input[@class='button']")).click();
 	}
 
 	@After
