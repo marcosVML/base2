@@ -33,3 +33,7 @@ Apos a execução destes 5 passos, o ambiente para execução dos testes esta pr
 1. Abra a IDE Eclipse 
 2. Abrar o arquivo runner (src/test/java/br.vm.marcos.runner/RunnerTest.java).
 3. Execulte o arquivo ultilizando o junit.
+
+##Observação
+
+Para que todos os teste rodem sem interferencias, a base de dados do mantis deve esta limpa, antes do teste verifique se possue algum bug cadastrado para o projeto marcos lopes, caso acha, remova antes de rodar os teste.
