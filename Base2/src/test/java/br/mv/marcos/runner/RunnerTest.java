@@ -8,7 +8,7 @@ import cucumber.api.junit.Cucumber;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-		features = "src/test/resources/features/cadastrarBug.feature",
+		features = "src/test/resources/features/",
 		glue = "br.mv.marcos.steps",
 		tags = {},
 		plugin = {"pretty", "html:target/report-html", "json:target/report.json"},
